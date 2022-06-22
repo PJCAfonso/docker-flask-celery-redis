@@ -6,4 +6,4 @@ CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:11522
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:11522')
 
 
-celery = Celery('tasks', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
+celery = Celery('bipas', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)

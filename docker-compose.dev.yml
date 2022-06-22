@@ -17,7 +17,7 @@ services:
     build:
       context: ./celery-queue
       dockerfile: Dockerfile.dev
-    command: celery -A tasks worker -l info -E
+    # command: celery -A tasks worker -l info -E
     environment:
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis

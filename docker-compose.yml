@@ -16,10 +16,11 @@ services:
     build:
       context: ./celery-queue
       dockerfile: Dockerfile
+    # https://docs.docker.com/engine/reference/commandline/service_create/#create-services-using-templates
     hostname: worker
     container_name: bipas_worker
     restart: unless-stopped
-    command: celery -A tasks worker -l info -E
+    command: celery -A tasks worker -l info -E --concurrency=5
     environment:
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis

@@ -8,7 +8,7 @@ dev:
 down:
 	docker-compose down
 prod:
-	docker-compose up -d
+	docker-compose up -d --scale worker=5 --no-recreate
 
 add:
 	curl -v http://localhost:11521/add/$(P1)/$(P2)

@@ -9,9 +9,21 @@ app = Flask(__name__)
 
 @app.route('/add/<int:param1>/<int:param2>')
 def add(param1: int, param2: int) -> str:
-    task = celery.send_task('tasks.add', args=[param1, param2], kwargs={})
+    task = celery.send_task('bipas.add', args=[param1, param2], kwargs={})
     response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id} </a>"
     return response
+
+
+@app.route('/block')
+def block() -> dict:
+    res = celery.send_task(
+        'bipas.block',
+        args=[["195.24.0.4", "10.10.10.20", "2001:0db8:85a3::8a2e:0370:7334"]],
+        kwargs={})
+    if res.state == states.PENDING:
+        return {"status": res.state, "task": res.id}
+    else:
+        return {"status": "done", "data": res.result}
 
 
 @app.route('/check/<string:task_id>')
